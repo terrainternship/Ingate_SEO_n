@@ -51,7 +51,7 @@ def write_to_csv(results, filename):
         csv_writer.writerows(results)
 
 # Пример использования
-queries_to_classify = ["перчатки", "шапки", "итд."]
+queries_to_classify = ["перчатки", "шапки", ...]
 results = classify_queries(queries_to_classify)
 
 # Записываем результаты в CSV файл
