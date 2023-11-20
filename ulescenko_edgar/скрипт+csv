@@ -1,0 +1,59 @@
+import requests
+from bs4 import BeautifulSoup
+import csv
+import time
+
+def classify_queries(queries):
+    commercial_queries = []
+    non_commercial_queries = []
+
+    for query in queries:
+        try:
+            # Формируем запрос к Яндексу
+            search_url = f'https://yandex.ru/search/?text={query}'
+
+            # Добавляем заголовок User-Agent, чтобы имитировать запрос от браузера
+            headers = {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'}
+
+            # Отправляем GET-запрос с таймаутом
+            response = requests.get(search_url, headers=headers, timeout=10)
+            response.raise_for_status()
+
+            # Используем BeautifulSoup для анализа HTML
+            soup = BeautifulSoup(response.text, 'html.parser')
+
+            # Проверяем, есть ли на странице признаки того, что она предназначена для продаж
+            is_commercial = any(
+                'купить' in result.text.lower() or 'заказать' in result.text.lower()
+                for result in soup.select('.organic__subtitle, .serp-item')
+            )
+
+            # Если на странице есть признаки продаж, считаем запрос коммерческим
+            if is_commercial:
+                commercial_queries.append((query, 1))
+            else:
+                non_commercial_queries.append((query, 0))
+
+            # Ждем некоторое время перед отправкой следующего запроса, чтобы избежать блокировки
+            time.sleep(2)
+
+        except Exception as e:
+            print(f"Error processing query '{query}': {e}")
+
+    return commercial_queries, non_commercial_queries
+
+def write_to_csv(results, filename):
+    with open(filename, 'w', newline='', encoding='utf-8') as csvfile:
+        csv_writer = csv.writer(csvfile)
+        csv_writer.writerow(['Keyword', 'Commercial'])
+        csv_writer.writerows(results)
+
+# Пример использования
+queries_to_classify = ["перчатки", "шапки", ...]
+commercial, non_commercial = classify_queries(queries_to_classify)
+
+# Записываем результаты в CSV файл
+write_to_csv(commercial + non_commercial, 'results.csv')
+
+print("Результаты записаны в файл 'results.csv'")
