@@ -4,8 +4,7 @@ import csv
 import time
 
 def classify_queries(queries):
-    commercial_queries = []
-    non_commercial_queries = []
+    results = []
 
     for query in queries:
         try:
@@ -29,11 +28,8 @@ def classify_queries(queries):
                 for result in soup.select('.organic__subtitle, .serp-item')
             )
 
-            # Если на странице есть признаки продаж, считаем запрос коммерческим
-            if is_commercial:
-                commercial_queries.append((query, 1))
-            else:
-                non_commercial_queries.append((query, 0))
+            # Добавляем результат в список
+            results.append({'Keyword': query, 'Commercial': int(is_commercial)})
 
             # Ждем некоторое время перед отправкой следующего запроса, чтобы избежать блокировки
             time.sleep(2)
@@ -41,19 +37,24 @@ def classify_queries(queries):
         except Exception as e:
             print(f"Error processing query '{query}': {e}")
 
-    return commercial_queries, non_commercial_queries
+    return results
 
 def write_to_csv(results, filename):
     with open(filename, 'w', newline='', encoding='utf-8') as csvfile:
-        csv_writer = csv.writer(csvfile)
-        csv_writer.writerow(['Keyword', 'Commercial'])
+        fieldnames = ['Keyword', 'Commercial']
+        csv_writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        
+        # Записываем заголовки
+        csv_writer.writeheader()
+
+        # Записываем данные
         csv_writer.writerows(results)
 
 # Пример использования
-queries_to_classify = ["перчатки", "шапки", ...]
-commercial, non_commercial = classify_queries(queries_to_classify)
+queries_to_classify = ["перчатки", "шапки", "итд."]
+results = classify_queries(queries_to_classify)
 
 # Записываем результаты в CSV файл
-write_to_csv(commercial + non_commercial, 'results.csv')
+write_to_csv(results, 'results.csv')
 
 print("Результаты записаны в файл 'results.csv'")
