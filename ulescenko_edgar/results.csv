@@ -1,3 +1,6 @@
 7000 данных нам слов на тех условиях которые мы говорили что если 5 страниц по результату коммерческие то и запрос квалифицируем как коммерческий. 
 Этот код создаст файл results.csv, в котором будут два столбца:  в формате "Keyword" и "Commercial", где "Commercial" будет содержать "1" для коммерческих запросов и "0" для не коммерческих.
-https://colab.research.google.com/drive/1z8pD7NqVeVggBGrVaAvj-gjwTaVLqFhD#scrollTo=AHaX9jCBc90Q
+https://colab.research.google.com/drive/1kcrOzlzfjKk3VW-6_dfZ1fsDc4jQmTzZ#scrollTo=KNJi_EUM-egy
+
+вот результат в пандас
+https://colab.research.google.com/drive/1uM0ehZATe83sL8vHYU6VBKe9tpm6lrCF#scrollTo=xvbjK42bC4FW
