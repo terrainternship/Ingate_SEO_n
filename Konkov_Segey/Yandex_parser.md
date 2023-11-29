@@ -1,6 +1,7 @@
-#Скрипт для сбора топ-10 ссылок выдачи Яндекс: 
-'''
+Скрипт для сбора топ-10 ссылок выдачи Яндекс:
+
 def get_yandex_urls(query):
+
     urls = []
     url = f"https://yandex.ru/search/?text={query}"
     response = requests.get(url)
@@ -9,4 +10,3 @@ def get_yandex_urls(query):
     for link in links[:10]:
       urls.append(link["href"])
     return urls
-'''
