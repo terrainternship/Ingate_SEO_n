@@ -1,4 +1,4 @@
-https://colab.research.google.com/drive/14S-20hlaKM7QlrMDyLUeHdLY53qA_L7c?usp=sharing
+https://colab.research.google.com/drive/14S-20hlaKM7QlrMDyLUeHdLY53qA_L7c?usp=sharing (работает пока не идеально)
 
 # # Этот код выполняет поиск по ключевым словам из файла в выбранной поисковой системе в нужном регионе, затем парсит по API результаты
 # ТОП-10 выдачи конкурентов (пока только в ПС Google) и анализирует текст из метатегов URL каждой страницы (Title, Description, H1, H2, H3)
