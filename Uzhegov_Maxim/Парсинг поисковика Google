@@ -1,0 +1,37 @@
+from requests_html import HTMLSession
+import time
+import random
+from operator import itemgetter
+
+keys = []
+with open ('keys.txt', 'r', encoding="utf-8") as k:
+    for line in k:
+        line = line.strip()
+        keys.append(line)
+
+spisok = []
+session = HTMLSession()
+
+for k in keys:
+    res = session.get(f'https://www.google.ru/search?q={k}&num=10&hl=ru')
+    links = res.html.xpath('//div[@class="g"]/div[@class="rc"]/div[@class="yuRUbf"]/a/@href')
+    domains = [x.split('/')[2] for x in links if 'http' in x]
+    spisok.append(domains)
+    random_timeout = random.randint(4, 10)
+    time.sleep(random_timeout)
+
+common_list = []
+for x in spisok:
+    common_list.extend(x)
+
+result = {i: common_list.count(i) for i in common_list}
+sortirovka = list(result.items())
+
+result = sorted(sortirovka, key=itemgetter(1), reverse = True)
+
+result = dict(result)
+with open ('result_keys.txt', 'w') as b:
+    for dom, chast in result.items():
+        b.write(f'{dom}\t{chast}' + '\n')
+        
+        print(f'{dom}\t{chast}')
