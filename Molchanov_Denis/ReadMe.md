@@ -1,6 +1,6 @@
 14.12.2023:
 1. Доработал скрипт "парсинг из Яндекса с помощью BeautifulSoup4" благодаря решению @Uzhegov_Maxim решена проблема частой блокировки обращений в яндекс.
-( смотреть test_10 exp_2 в https://colab.research.google.com/drive/1M3jIu4-8Ko0OZV1y-IgGs2A_j-klvQ-S?usp=sharing ) ;
+( смотреть test_10 exp_1 в https://colab.research.google.com/drive/1M3jIu4-8Ko0OZV1y-IgGs2A_j-klvQ-S?usp=sharing ) ;
 2. Проверил влияние "чистоты" входящей базы данных для обучения нейронной сети на её точность
 ( смотреть test_14 в https://colab.research.google.com/drive/1M3jIu4-8Ko0OZV1y-IgGs2A_j-klvQ-S?usp=sharing ) ;
 3. Убедился в важности разнообразия базы данных обучения модели при проверки на новых данных
